@@ -4,6 +4,9 @@ import { useState, useCallback, useEffect } from 'react'
 import { SwapFormData, Token, Chain, SwapQuote } from '@/lib/types'
 import { SUPPORTED_CHAINS, POPULAR_TOKENS, DEFAULT_SLIPPAGE } from '@/lib/constants'
 import { formatNumber, debounce } from '@/lib/utils'
+import { smartRouter } from '@/lib/cross-chain-router'
+import { transactionService } from '@/lib/transaction-service'
+import { walletIntegrationService } from '@/lib/wallet-integration'
 import { AssetSelector } from './AssetSelector'
 import { ChainSelector } from './ChainSelector'
 import { TransactionStatusIndicator } from './TransactionStatusIndicator'
@@ -38,30 +41,13 @@ export function SwapForm() {
       setError(null)
 
       try {
-        // Simulate API call for quote
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        
-        const mockQuote: SwapQuote = {
-          fromToken: data.fromToken,
-          toToken: data.toToken,
-          fromAmount: data.amount,
-          toAmount: (parseFloat(data.amount) * 0.998).toString(), // Mock 0.2% slippage
-          priceImpact: 0.15,
-          gasEstimate: '0.002',
-          route: {
-            path: [data.fromToken.address, data.toToken.address],
-            exchanges: ['Uniswap V3', 'SushiSwap'],
-            estimatedGas: '150000',
-            priceImpact: 0.15,
-            slippage: 0.2
-          },
-          validUntil: Date.now() + 30000 // 30 seconds
-        }
-        
-        setQuote(mockQuote)
+        const quote = await smartRouter.getOptimalQuote(data)
+        setQuote(quote)
       } catch (err) {
-        setError('Failed to fetch quote. Please try again.')
+        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch quote. Please try again.'
+        setError(errorMessage)
         console.error('Quote fetch error:', err)
+        setQuote(null)
       } finally {
         setIsLoadingQuote(false)
       }
@@ -82,12 +68,20 @@ export function SwapForm() {
     setError(null)
 
     try {
-      // Simulate swap transaction
-      await new Promise(resolve => setTimeout(resolve, 3000))
-      
-      // Random success/failure for demo
-      if (Math.random() > 0.2) {
+      // Get user wallet address (in a real app, this would come from wallet connection)
+      const walletInfo = await walletIntegrationService.connectWallet()
+
+      // Execute the swap transaction
+      const result = await transactionService.executeSwap({
+        quote,
+        userAddress: walletInfo.address,
+        slippageTolerance: formData.slippageTolerance,
+        gasRelayEnabled: formData.gasRelayEnabled
+      })
+
+      if (result.result.status === 'success') {
         setSwapStatus('success')
+        // Could emit an event or update transaction history here
       } else {
         throw new Error('Transaction failed')
       }
@@ -96,7 +90,7 @@ export function SwapForm() {
       setError(err instanceof Error ? err.message : 'Swap failed')
     } finally {
       setIsSwapping(false)
-      
+
       // Reset status after 5 seconds
       setTimeout(() => {
         setSwapStatus('idle')
