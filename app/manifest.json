@@ -1,0 +1,19 @@
+{
+  "frame": {
+    "version": "1",
+    "name": "AggroSwap",
+    "homeUrl": "https://aggroswap.vercel.app",
+    "iconUrl": "https://aggroswap.vercel.app/icon.png",
+    "splashImageUrl": "https://aggroswap.vercel.app/splash.png",
+    "splashBackgroundColor": "#1a1a1a",
+    "subtitle": "Cross-chain swaps, optimized",
+    "description": "A cross-chain liquidity aggregator for EVM-compatible chains, enabling optimal swaps of tokens and native assets with smart account integration.",
+    "primaryCategory": "defi",
+    "tags": ["defi", "swap", "cross-chain", "liquidity", "aggregator", "base"],
+    "heroImageUrl": "https://aggroswap.vercel.app/hero.png",
+    "tagline": "Get the best price, every time",
+    "ogTitle": "AggroSwap - Cross-chain swaps, optimized",
+    "ogDescription": "Cross-chain liquidity aggregator for EVM-compatible chains. Get the best price, every time.",
+    "ogImageUrl": "https://aggroswap.vercel.app/og.png"
+  }
+}
