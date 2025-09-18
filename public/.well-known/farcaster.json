@@ -1,0 +1,30 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
+    "name": "AggroSwap",
+    "subtitle": "Built with Zara",
+    "description": "AggroSwap is a Base Mini App built with Zara.",
+    "iconUrl": "https://0co.to/images/zara-2.png",
+    "homeUrl": "https://ee6b9607ddc840e9be56fd7772881398-83wn.vercel.app",
+    "splashImageUrl": "https://ee6b9607ddc840e9be56fd7772881398-83wn.vercel.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "heroImageUrl": "https://ee6b9607ddc840e9be56fd7772881398-83wn.vercel.app/image.png",
+    "tagline": "AggroSwap",
+    "screenshotUrls": [
+      "https://ee6b9607ddc840e9be56fd7772881398-83wn.vercel.app/screenshot.png",
+      "https://ee6b9607ddc840e9be56fd7772881398-83wn.vercel.app/screenshot.png"
+    ],
+    "primaryCategory": "social",
+    "tags": [
+      "base",
+      "miniapp",
+      "onchainkit"
+    ],
+    "webhookUrl": "https://ee6b9607ddc840e9be56fd7772881398-83wn.vercel.app/api/webhook"
+  }
+}
