@@ -1,16 +1,8 @@
-'use client'
-
-import { useMiniKit } from '@coinbase/minikit'
-import { useAuthenticate } from '@coinbase/onchainkit/minikit'
-
 interface AppShellProps {
   children: React.ReactNode
 }
 
 export function AppShell({ children }: AppShellProps) {
-  const { context } = useMiniKit()
-  const { user } = useAuthenticate()
-
   return (
     <div className="min-h-screen bg-bg">
       {/* Header */}
@@ -22,26 +14,10 @@ export function AppShell({ children }: AppShellProps) {
             </div>
             <span className="font-semibold text-text-primary">AggroSwap</span>
           </div>
-          
-          <div className="flex items-center space-x-3">
-            {context?.user && (
-              <div className="flex items-center space-x-2">
-                {context.user.pfpUrl && (
-                  <img
-                    src={context.user.pfpUrl}
-                    alt="Profile"
-                    className="w-6 h-6 rounded-full"
-                  />
-                )}
-                <span className="text-sm text-text-secondary">
-                  {context.user.displayName || 'User'}
-                </span>
-              </div>
-            )}
-            
-            {user && (
-              <div className="w-2 h-2 bg-accent rounded-full" title="Connected" />
-            )}
+
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-accent rounded-full" title="Connected to Base" />
+            <span className="text-sm text-text-secondary">Base Network</span>
           </div>
         </div>
       </header>
@@ -55,10 +31,10 @@ export function AppShell({ children }: AppShellProps) {
       <footer className="border-t border-gray-700 bg-surface/30 px-4 py-6 mt-8">
         <div className="text-center">
           <p className="text-sm text-text-secondary">
-            Powered by Base • Built with MiniKit
+            Powered by Base • Cross-chain swaps, optimized
           </p>
           <p className="text-xs text-text-secondary mt-1">
-            Cross-chain swaps, optimized for the best rates
+            Get the best price, every time
           </p>
         </div>
       </footer>
